@@ -66,4 +66,8 @@ contract Helper {
         items = items[0].toList();
         return (items[0].toAddress(), items[1].toUint());
     }
+    function customLongListDestructure(bytes memory item) public pure returns (address, address, address) {
+        RLPReader.RLPItem[] memory items = item.toRlpItem().toList();
+        return (items[11].toAddress(), items[12].toAddress(), items[13].toAddress());
+    }
 }

@@ -114,6 +114,17 @@ contract("RLPReader", async (accounts) => {
         assert(result.toNumber() == str.length, assertString + "nested structure");
     });
 
+
+    it("decodes long lists", async () => {
+        let assertString = "Number of items in an rlp encoded list wrongly detected: ";
+        let str = [1, 2, accounts[3], accounts[4], accounts[5], 6, 7, 8, 9, 10, 11,
+                   accounts[1], accounts[2], accounts[3]];
+        result = await helper.customLongListDestructure.call(toHex(rlp.encode(str)));
+        assert(result[0] == str[11], "First element incorrectly decoded");
+        assert(result[1] == str[12], "First element incorrectly decoded");
+        assert(result[2] == str[13], "First element incorrectly decoded");
+    });
+
     it("properly handles data conversions", async () => {
         let str = rlp.encode([1, 2, 3]).toString('hex');
         let result = await helper.toBytes.call("0x" + str);
